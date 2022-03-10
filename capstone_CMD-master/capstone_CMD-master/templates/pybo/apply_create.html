@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <h5 class="my-3 border-bottom pb-2">직원등록일지</h5>
+        <form method="post" class="post-form my-3">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <strong>{{ field.label }}</strong>
+                            {{ field.errors }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">이름</span>
+                <input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+
+            <div class="input-group flex-nowrap mt-5">
+                <span class="input-group-text" id="addon-wrapping">이메일</span>
+                <input type="email" class="form-control" name="email" id="email"
+                       placeholder="이메일을 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">주소지</span>
+                <input type="text" class="form-control" name="Living" id="Living"
+                       placeholder="주소지를 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            {#            <div class="input-group flex-nowrap mt-5 inline-group">#}
+            {#                <span class="input-group-text" id="addon-wrapping">성별</span>#}
+            {#                <input type="text" class="form-control" name="gender" id="gender" placeholder="성별"#}
+            {#                       aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#            </div>#}
+
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">사번</span>
+                <input type="text" class="form-control" name="assign_num" id="assign_num" placeholder="사번"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">핸드폰 번호</span>
+                <input type="text" class="form-control" name="Phone" id="Phone" placeholder="핸드폰 번호"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">부서</span>
+                <input type="text" class="form-control" name="office" id="office" placeholder="소속 부서를 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            <div class="form-group mt-5" style="text-align: center;">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="gender" id="gender" autocomplete="off" value="남자" checked>남자
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="gender" id="gender" autocomplete="off" value="여자" checked>여자
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-5">저장하기</button>
+        </form>
+    </div>
+{% endblock %}

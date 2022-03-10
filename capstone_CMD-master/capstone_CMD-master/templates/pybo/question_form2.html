@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    </style>
+    <div class="container">
+        <h5 class="my-3 border-bottom pb-2">운행일지등록</h5>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <strong>{{ field.label }}</strong>
+                            {{ field.errors }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <!-- 오류표시 End -->
+{#                        <div class="form-group">#}
+{#                            <label for="subject">제목</label>#}
+{#                            <input type="text" class="form-control" name="subject" id="subject"#}
+{#                                   value="{{ form.Car_num.value|default_if_none:'' }}">#}
+{#                        </div>#}
+
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">선택차량번호</span>
+                <input type="text" class="form-control" name="Car_num" id="Car_num" placeholder="운행한 차량번호를 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+                {#                <div class="buttonstyle" id="addon-wrapping">#}
+                {#                    <input type="button" value="차량조회"/>#}
+                {#                </div>#}
+            </div>
+
+            <div class="input-group flex-nowrap mt-5">
+                <span class="input-group-text" id="addon-wrapping">사번</span>
+                <input type="text" class="form-control" name="bussiness_num" id="bussiness_num" placeholder="사번"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+                {#                <div class="buttonstyle" id="addon-wrapping">#}
+                {#                    <input type="button" value="차량조회"/>#}
+                {#                </div>#}
+            </div>
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">운행책임자</span>
+                <input type="text" class="form-control" name="bussiness_manager" id="bussiness_manager" placeholder="당일 운행한 사람을 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+         <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">출발지</span>
+                <input type="text" class="form-control" name="start_pos" id="start_pos" placeholder="출발지"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+
+
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">도착지</span>
+                <input type="text" class="form-control" name="destination_pos" id="destination_pos" placeholder="도착지"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+             <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">위도(Latitude)</span>
+                <input type="text" class="form-control" name="Lat" id="Lat" placeholder="위도"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+             <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">경도(Longitude)</span>
+                <input type="text" class="form-control" name="Long" id="Long" placeholder="경도"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">운행날짜</span>
+                <input type="text" class="form-control" name="start_date" id="start_date" placeholder="YYYY-MM-DD 형식으로 입력하세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">출발시간</span>
+                <input type="text" class="form-control" name="depart_date" id="depart_date" placeholder="YYYY-MM-DD HH:MM 형식으로 입력해주세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+
+
+            <div class="input-group flex-nowrap mt-5 inline-group">
+                <span class="input-group-text" id="addon-wrapping">도착시간</span>
+                <input type="text" class="form-control" name="arrive_date" id="arrive_date" placeholder="YYYY-MM-DD HH:MM 형식으로 입력해주세요"
+                       aria-label="Car Number"
+                       aria-describedby="addon-wrapping"/>
+            </div>
+            {#            <div class="input-group flex-nowrap mt-5">#}
+            {#                <span class="input-group-text" id="addon-wrapping">*사번</span>#}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#                <span class="input-group-text" id="addon-wrapping">*운행날짜</span>#}
+            {##}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#                <select>#}
+            {#                    <option>1월</option>#}
+            {#                    <option>2월</option>#}
+            {#                    <option>3월</option>#}
+            {#                    <option>4월</option>#}
+            {#                    <option>5월</option>#}
+            {#                    <option>6월</option>#}
+            {#                    <option>7월</option>#}
+            {#                    <option>8월</option>#}
+            {#                    <option>9월</option>#}
+            {#                    <option>10월</option>#}
+            {#                    <option>11월</option>#}
+            {#                    <option>12월</option>#}
+            {#                </select>#}
+            {#            </div>#}
+            {##}
+            {##}
+            {#            <div class="input-group flex-nowrap mt-5">#}
+            {#                <span class="input-group-text" id="addon-wrapping">*출발지</span>#}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#                <span class="input-group-text" id="addon-wrapping">*출발시간</span>#}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#            </div>#}
+            {#            <div class="input-group flex-nowrap mt-5">#}
+            {#                <span class="input-group-text" id="addon-wrapping">*도착지</span>#}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#                <span class="input-group-text" id="addon-wrapping">*도착시간</span>#}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#            </div>#}
+            {#            <div class="input-group flex-nowrap mt-5">#}
+            {#                <span class="input-group-text" id="addon-wrapping">비고</span>#}
+            {#                <input type="text" class="form-control" placeholder="" aria-label="Car Number"#}
+            {#                       aria-describedby="addon-wrapping"/>#}
+            {#            </div>#}
+
+            {#            <div class="form-group">#}
+            {#                <label for="content">내용</label>#}
+            {#                <textarea class="form-control" name="content"#}
+            {#                          id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>#}
+            {#            </div>#}
+            <input type="file" name="pdf"  id="id_pdf">
+            <button type="submit" class="btn btn-primary mt-5">저장하기</button>
+        </form>
+    </div>
+{% endblock %}

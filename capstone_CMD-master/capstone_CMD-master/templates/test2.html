@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+        label{
+            font-size: 1.5em;
+        }
+        #chart_container {
+            margin: auto;
+            display: block;
+            width: 80%;
+        }
+        #buttons{
+            width: 250px;
+            display:flex;
+            justify-content: space-between; 
+                   
+        }
+        #buttons button{
+            font-family: 'Gamja Flower', cursive;
+            font-size: 1em;    
+        }
+        #resultDiv{
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <form name="stuInfo">
+        차 종류: <input type="text" name="dept">
+        이 름:<input type="text" name="sName">
+        <hr>
+
+        <label name="q1">Q1. 이 사이트의 만족도는?</label><br><br>
+        <input type="radio" name="q1" id="0" value=”매우 만족">매우 만족<br>
+        <input type="radio" name="q1" id="1" value="만족">만족<br>
+        <input type="radio" name="q1" id="2" value="보통">보통<br>
+        <input type="radio" name="q1" id="3" value=”불만족">불만족<br>
+        <hr>
+
+        <label name="q2">Q2. 이용하는 도시는?</label><br><br>
+        <input type="radio" name="q2" id="4" value="서울">서울<br>
+        <input type="radio" name="q2" id="5" value="경기">경기<br>
+        <input type="radio" name="q2" id="6" value="춘천">춘천<br>
+        <input type="radio" name="q2" id="7" value="부산">부산<br>
+        <hr>
+
+        <label name="q3">Q3. 이 사이트 장점은?</label><br><br>
+        <input type="radio" name="q3" id="8" value="편리성">편리성<br>
+        <input type="radio" name="q3" id="9" value="유용성">유용성<br>
+        <input type="radio" name="q3" id="10" value="정리가 잘됨">정리가 잘 됨<br>
+        <input type="radio" name="q3" id="11" value="신속성">신속성<br>
+        <hr>
+
+        <label name="q4">Q4. 차 종류는 ?</label><br><br>
+        <input type="radio" name="q4" id="12" value="kia 자동차"> kia 자동차 <br>
+        <input type="radio" name="q4" id="13" value="삼성">삼성.<br>
+        <input type="radio" name="q4" id="14" value="현대">현대.<br>
+        <input type="radio" name="q4" id="15" value="bmw">bmw<br>
+        <hr>
+
+        <label>Q5. 월 이용 횟수는?</label><br><br>
+        <input type="radio" name="q5" id="16" value="1회">1회<br>
+        <input type="radio" name="q5" id="17" value="2회-3회">2회-3회<br>
+        <input type="radio" name="q5" id="18" value="4회-7회 ">4회-7회<br>
+        <input type="radio" name="q5" id="19" value="8회 이상">8회 이상<br>
+        <hr>
+
+    </form>
+    <div id="buttons">
+        <button id="submit">설문제출</button>
+        <button id="showResult">결과보기</button>
+        <button id="showChart">차트보기</button>
+    </div>
+    <div id="result"></div>
+    <div id="chart_container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    <script>
+
+        var count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var max = [0, 0, 0, 0, 0];
+        var q_label = ["", "", "", "", ""];
+        var response = 0;
+        function computerScore() {
+            response++;
+            if (response <= 10) {
+
+                for (i = 0; i < 20; i++) {
+                    if (document.getElementById(i + "").checked == true) {
+                        count[i]++;
+                        console.log(i + "is checked");
+                    } else {
+                        console.log("error");
+                    }
+                }
+                for (i = 0; i < 20; i++) {
+                    console.log("count[" + i + "] : " + count[i] + "개");
+
+                }
+                var k = 0;
+                for (i = 0; i < 20; i += 4) {
+                    for (j = i; j < i + 4; j++) {
+                        if (max[k] < count[j]) {
+                            max[k] = count[j];
+                            // q_label.splice(k,1,document.getElementById(j+"").value);
+                            q_label[k] = document.getElementById(j + "").value;
+                        }
+                    }
+                    console.log(i + ":" + max[k] + "label : " + q_label[k]);
+                    k++;
+                }
+
+                for (i = 0; i < 20; i++) {
+                    document.getElementById(i + "").checked = false;
+                }
+            } else {
+                alert("설문 횟수 초과입니다.");
+            }
+        };
+
+        function openResult() {
+            var obj = document.getElementById("result");
+            var resultDiv = document.getElementById("resultDiv");
+            if (resultDiv != null) {
+                result.removeChild(resultDiv);
+            }
+
+            var newDIV = document.createElement("div");
+            newDIV.innerHTML = "<h2>설문 결과</h2><p>Q1. 이 사이트의 만족도는: " + q_label[0] + "</p>" + "<p>Q2. 이용하는 도시는: " + q_label[1] + "</p>" + "<p>Q3. 이 사이트의 장점은 : " + q_label[2] + "</p>" + "<p>Q4. 차 종류는: " + q_label[3] + "</p>" + "<p>Q5. 월 용횟수는: " + q_label[4] + "</p>";
+            newDIV.setAttribute("id", "resultDiv");
+            obj.appendChild(newDIV);
+        }
+
+        function openChart() {
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: q_label,
+                    datasets: [{
+                        label: "설문 득점",
+                        data: max,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)'
+                            // 'rgba(54, 162, 235, 0.2)',
+                            // 'rgba(255, 206, 86, 0.2)',
+                            // 'rgba(75, 192, 192, 0.2)',
+                            // 'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)'
+                            // 'rgba(54, 162, 235, 1)',
+                            // 'rgba(255, 206, 86, 1)',
+                            // 'rgba(75, 192, 192, 1)',
+                            // 'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                steps: 1,
+                                //stepValue: .5,
+                                max: 10
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: '사이트 설문조사 결과'
+                    }
+                }
+            });
+        };
+
+        window.onload = init;
+
+        function init() {
+            var submit = document.getElementById("submit");
+            submit.onclick = computerScore;
+            var showResult = document.getElementById("showResult");
+            showResult.onclick = openResult;
+            var showChart = document.getElementById("showChart");
+            showChart.onclick = openChart;
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+{% endblock %}

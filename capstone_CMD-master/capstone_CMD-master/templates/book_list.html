@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Download</th>
+        </tr>
+        </thead>
+    {% if books %}
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td><a href="{{ book.pdf.url }}">Download</a> </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% endif %}
+    </table>
+{% endblock %}

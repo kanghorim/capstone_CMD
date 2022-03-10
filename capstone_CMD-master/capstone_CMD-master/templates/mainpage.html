@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            border: 0;
+        }
+
+
+
+
+        #main_section > article.main_article {
+            margin-bottom: 10px;
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        /*사이드 */
+
+
+        /* 목록 */
+        .item {
+            overflow: hidden;
+            padding: 10px;
+            border: 1px solid black;
+            border-top: none;
+        }
+
+        .thumbnail {
+            float: left;
+        }
+
+        .description {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .description > strong {
+            display: block;
+            width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team-photo {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tab-item {
+            margin-top: 30px;
+        }
+
+        /* 푸터 */
+
+        #main_footer {
+            /* 중앙 정렬 */
+            width: 960px;
+            margin: 0 auto;
+            margin-bottom: 10px;
+
+            /* 테두리 */
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid black;
+
+            /* 글자 정렬 */
+            text-align: center;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        @media screen and (max-width: 650px) {
+            .column {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+        .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .title {
+            color: grey;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+    </style>
+    </head>
+    <body>
+
+  <div class="row">
+  <div class="column">
+    <div class="card">
+      <img class="img-profile rounded-circle" src={% static "img2/horim.jpg" %} alt="Jane" style="width:70%">
+      <div class="container">
+        <h2>강호림</h2>
+        <p class="title">CEO & Founder</p>
+        <p>취미: 헬스 좋아하는 것 : 헬스 </p>
+        <p>라즈베리파이 담당, 기계 담당,발표 담당,unity게임 개발 중</p>
+        <p>horim159456.@naver.com</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img class="img-profile rounded-circle" src={% static "img2/jaeho.jpg" %} alt="Jane" style="width:70%">
+      <div class="container">
+        <h2>김재호</h2>
+        <p class="title">Art Director</p>
+        <p>데이터 베이스 담당, 라즈베리파이,GPS 담당</p>
+        <p>unity 게임 캐릭터 취미로 만들고 있음,데이터베이스 전문, 언어 개발(java,c)</p>
+        <p>wwwlo3@naver.com</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img class="img-profile rounded-circle" src={% static "img2/jongann.jpg" %} alt="Jane" style="width:70%">
+      <div class="container">
+        <h2>이종안</h2>
+        <p class="title">Designer</p>
+        <p>현 django 웹 개발 프로젝트의 통합 담당 (응애 개발자에서 걸음마 개발자로)</p>
+        <p>spring framework,django project 연구중</p>
+        <p>dlwhddksiq@naver.com</p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img class="img-profile rounded-circle" src={% static "img2/kyungjun.jpg" %} alt="Jane" style="width:70%">
+      <div class="container">
+        <h2>최경준</h2>
+        <p class="title">Designer</p>
+        <p>취미 바둑 특기 등산</p>
+        <p>프론트엔트담당, 데이터 누적 담당 ,취미 바둑 특기 등산</p>
+        <p>family150@naver.com</p>
+            </div>
+      </div>
+    </div>
+    <div class="column">
+    <div class="card">
+      <img class="img-profile rounded-circle" src={% static "img2/mingu.jpg" %} alt="Jane" style="width:70%">
+      <div class="container">
+        <h2>선민구</h2>
+        <p class="title">Designer</p>
+        <p>NFC,라즈베리파이 담당,GPS 담당</p>
+        <p>시스템,운영체제, 라즈베리파이 아두이노 담당,언어 개발(java,c)</p>
+        <p>tjsalsrn6@naver.com</p>
+        </div>
+      </div>
+</div>
+    <div class="card">
+      <img class="img-profile rounded-circle" src={% static "img2/CMDteam.jpg" %} alt="Jane" style="width:90%">
+      <div class="container">
+        <h2>CMD TEAM</h2>
+        <p class="title">DEVELOPER</p>
+        <p>do your best,try hard</p>
+        <p>프론트엔트담당, 데이터 누적 담당 ,라즈베리파이,GPS</p>
+        <p>CMD@naver.com</p>
+            </div>
+      </div>
+
+    <!-- Image of location/map -->
+{% endblock %}

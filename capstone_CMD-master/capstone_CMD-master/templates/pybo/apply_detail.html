@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+
+    <div class="container my-3">
+    {% if messages %}
+        <div class="alert alert-danger my-3" role="alert">
+            {% for message in messages %}
+                <strong>{{ message.tags }}</strong>
+                <ul>
+                    <li>{{ message.message }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <button class="btn btn-facebook"><a href="{% url 'pybo:employee' %}">돌아가기</a></button>
+    <h2 class="border-bottom py-2">{{ business_list.name }}</h2>
+    <div class="card my-3">
+
+
+    <div class="card-body">
+    <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">이름 : {{ business_list.name }}</li>
+            <li class="list-group-item">이메일 : {{ business_list.email }}</li>
+            <li class="list-group-item">사번 : {{ business_list.assign_num }}</li>
+            <li class="list-group-item">성별 : {{ business_list.gender }}</li>
+            <li class="list-group-item">주소지 : {{ business_list.Living }}</li>
+            <li class="list-group-item">핸드폰 번호 : {{ business_list.Phone }}</li>
+            <li class="list-group-item">부서 : {{ business_list.office }}</li>
+        </ul>
+    </div>
+    {#                <div class="card-text" style="white-space: pre-line;">{{ question.Car_num }}</div>#}
+    {#                <div class="card-text" style="white-space: pre-line;">{{ question.Car_variety }}</div>#}
+    {#                <div class="card-text" style="white-space: nowrap;">{{ question.Car_manager }}</div>#}
+    <div class="d-flex justify-content-end">
+        <div class="badge badge-light p-2">
+            <div class="mb-2"><span class="author mr-5">작성자</span>{{ business_list.author.username }}</div>
+            {{ business_list.create_date }}
+        </div>
+        {% if business_list.modify_date %}
+            <div class="badge badge-light p-2 text-left mx-3">
+                <div class="mb-2">수정됨</div>
+                <div>{{ business_list.modify_date }}</div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if request.user == business_list.author %}
+        <div class="my-3">
+            <a href="{% url 'pybo:employee_modify' business_list.id %}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+
+        </div>
+        <div class="my-3">
+            <a href="{% url 'pybo:employee_delete' business_list.id %}"
+               class="btn btn-sm btn-outline-secondary">삭제</a>
+
+{#        </div>#}
+{#        <a href="#" class="delete btn btn-sm btn-outline-secondary"#}
+{#           data-uri="{% url 'pybo:question_delete' question.id %}">삭제</a>#}
+    {% endif %}
+
+    {#        </div>#}
+    {##}
+    {#    </div>#}
+    {#        <h5 class="border-bottom my-3 py-2">{{ business_list.name.answer_set.count }}개의 댓글이 있습니다.</h5>#}
+    {#        {% for answer in business_list.answer_set.all %}#}
+    {#            <div class="card my-3">#}
+    {#                <div class="card-body">#}
+    {#                    <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>#}
+    {#                    <div class="d-flex justify-content-end">#}
+    {#                        <div class="badge badge-light p-2">#}
+    {#                            <div class="mb-2"><span class="author mr-5">작성자</span>{{ answer.author.username }}#}
+    {#                            </div>#}
+    {#                            {{ answer.create_date }}#}
+    {##}
+    {##}
+    {#                        </div>#}
+    {#                        {% if answer.modify_date %}#}
+    {#                            <div class="badge badge-light p-2 text-left mx-3">#}
+    {#                                <div class="mb-2">수정됨</div>#}
+    {#                                <div>{{ answer.modify_date }}</div>#}
+    {#                            </div>#}
+    {#                        {% endif %}#}
+    {#                    </div>#}
+    {#                    {% if request.user == answer.author %}#}
+    {#                        <div class="my-3">#}
+    {#                            <a href="{% url 'pybo:answer_modify' answer.id %}"#}
+    {#                               class="btn btn-sm btn-outline-secondary">수정</a>#}
+    {#                        </div>#}
+    {#                        <a href="#" class="delete btn btn-sm btn-outline-secondary "#}
+    {#                           data-uri="{% url 'pybo:answer_delete' answer.id %}">삭제</a>#}
+    {#                    {% endif %}#}
+    {#                                        <a href="#" class="delete btn btn-sm btn-outline-secondary "#}
+    {#                                           data-uri="{% url 'pybo:answer_delete' answer.id %}">삭제</a>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        {% endfor %}#}
+    {#        <form action="{% url 'pybo:employee_answer' business_list.id %}" method="post" class="my-3">#}
+    {#            {% csrf_token %}#}
+    {#            <div class="form-group">#}
+    {#                   <textarea {% if not user.is_authenticated %}disabled{% endif %}#}
+    {#                             name="content" id="content" class="form-control" rows="10"></textarea>#}
+    {#            </div>#}
+    {#            <input type="submit" value="댓글 등록하기" class="btn btn-primary">#}
+    {#        </form>#}
+    {#    </div>#}
+
+{% endblock %}
+{% block script %}
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            $(".delete").on('click', function () {
+                if (confirm("정말로 삭제하시겠습니까?")) {
+                    location.href = $(this).data('uri');
+                }
+            });
+        });
+    </script>
+{% endblock %}

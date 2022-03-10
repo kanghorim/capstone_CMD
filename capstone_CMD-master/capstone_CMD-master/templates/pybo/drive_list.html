@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">공용차량 운행일지 관리</h1>
+    <p class="mb-4">이곳은 운행일지를 등록하는 곳입니다..
+    </p>
+    {#        {% include 'search.html' %}#}
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    {#                    <div class="dataTables_length" id="dataTable_length"><label>Show <select name="dataTable_length"#}
+                    {#                                                                                             aria-controls="dataTable"#}
+                    {#                                                                                             class="custom-select custom-select-sm form-control form-control-sm">#}
+                    {#                        <option value="10">10</option>#}
+                    {#                        <option value="25">25</option>#}
+                    {#                        <option value="50">50</option>#}
+                    {#                        <option value="100">100</option>#}
+                    {#                    </select> entries</label></div>#}
+                    {#                <div class="col-sm-12 col-md-6">#}
+                    {#                    <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"#}
+                    {#                                                                                              class="form-control form-control-sm"#}
+                    {#                                                                                              placeholder=""#}
+                    {#                                                                                              aria-controls="dataTable"></label>#}
+                    {#                    </div>#}
+                    {#                </div>#}
+                    {#        </div>#}
+                    <h6 class="m-0 font-weight-bold text-primary">공용차량 운행 일지 등록 및 관리</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            {#        <thead>#}
+                            {#        <tr>#}
+                            {#            <th>제목</th>#}
+                            {#            <th>작성일자</th>#}
+                            {#            <th>글쓴이</th>#}
+                            {##}
+                            {#        </tr>#}
+                            {#        </thead>#}
+
+                            <tbody>
+                            <div class="container my-3">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="thead-dark">
+                                        <th>번호</th>
+                                        <th style="width:100px">차량등록번호</th>
+                                        <th>사번</th>
+                                        <th>운행날짜</th>
+                                        <th>출발지</th>
+                                        <th>도착지</th>
+                                        <th>작성날짜</th>
+                                        <th>작성자</th>
+                                        <th>도착지 위도</th>
+                                        <th>도착지 경도</th>
+                                        <th>파일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if cmd_question_list %}
+                                        {% for cmd_question in cmd_question_list %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>
+                                                    <a href="{% url 'pybo:CMD_detail' cmd_question.id %}">{{ cmd_question.Car_num }}</a>
+                                                    {% if cmd_question.answer_set.count > 0 %}
+                                                        <span class="text-danger small ml-2">{{ cmd_question.answer_set.count }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ cmd_question.bussiness_num }}</td>
+                                                <td>{{ cmd_question.start_date }}</td>
+                                                <td>{{ cmd_question.start_pos }}</td>
+                                                <td>{{ cmd_question.destination_pos }}</td>
+                                                <td>{{ cmd_question.create_date }}</td>
+                                                <td>{{ cmd_question.author.username }}</td>
+                                                <td>{{ cmd_question.Lat }}</td>
+                                                <td>{{ cmd_question.Long }}</td>
+                                                <td><a href = "{{ cmd_question.pdf.url }}" class= "btn btn-primary">file</a> </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3">질문이 없습니다.</td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ul class="pagination justify-content-center">
+                                <!-- 이전페이지 -->
+                                {% if cmd_question.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ cmd_question.previous_page_number }}">이전</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                                    </li>
+                                {% endif %}
+                                <!-- 페이지리스트 -->
+                                {% for page_number in cmd_question.paginator.page_range %}
+                                    {% if page_number >= cmd_question.number|add:-5 and page_number <= cmd_question.number|add:5 %}
+                                        {% if page_number == cmd_list_new.number %}
+                                            <li class="page-item active" aria-current="page">
+                                                <a class="page-link"
+                                                   href="?page={{ page_number }}">{{ page_number }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="?page={{ page_number }}">{{ page_number }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <!-- 다음페이지 -->
+                                {% if cmd_question.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ cmd_question.next_page_number }}">다음</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                            <!-- 페이징처리 끝 -->
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'pybo:CMD_question_create' %}" class="btn btn-primary mt-5">운행일지 등록</a>
+                            {% endif %}
+
+                            {#    <a href="{% url 'postcreate' %}" class="btn btn-primary btn-icon-split">#}
+                            {#                                        <span class="icon text-white-50">#}
+                            {#                                            <i class="fas fa-flag"></i>#}
+                            {#                                        </span>#}
+                            {#        <span class="text">글쓰기</span>#}
+                            {#    </a>#}
+
+                            <!-- /.container-fluid -->
+                            <form id="searchForm" method="get" action="{% url 'pybo:CMD_index' %}">
+                                <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+                                <input type="hidden" id="page" name="page" value="{{ page }}">
+                            </form>
+
+{% endblock %}

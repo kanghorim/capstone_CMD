@@ -1,0 +1,35 @@
+
+var map = new naver.maps.Map('map', {
+    center: new naver.maps.LatLng(37.5698411, 126.9783927),
+    zoom: 10
+});
+
+const url = "https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=10000&serviceKey=v8gNCKMyzNwxgPKtTUKY8udmOeZ0tdNfgDyxZjjE39gtf4qEVVWQw5i0MP4qumPga3uOIsHYZAtzX6uf%2B4j6xg%3D%3D"
+
+        fetch(url)
+        .then((res) => res.json())
+        .then((myJson) => {
+           console.log(JSON.stringify(myJson,null,1));
+
+           var markers = [];
+           const stores = myJson.data;
+           for (var i = 0; i<stores.length; i++){
+
+            var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(stores[i]['lat'],stores[i]['lng']),
+            map: map
+            });
+            var infowindow = new naver.maps.InfoWindow({
+                 content: stores[i]['address']
+            });
+            naver.maps.Event.addListener(marker, "click", function(e) {
+            if (infowindow.getMap()) {
+                infowindow.close();
+            } else {
+                infowindow.open(map, marker);
+            }
+                });
+
+            infowindow.open(map, marker);
+            }
+            });
